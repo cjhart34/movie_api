@@ -3,13 +3,145 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/styles.css">
         <title>MyFlix</title>
     </head>
     <body>
         <h1>Documentation</h1>
-        <p>To build the server-side component of a “movies” web application. The web
-            application will provide users with access to information about different
-            movies, directors, and genres. Users will be able to sign up, update their
-            personal information, and create a list of their favorite movies.</p>
+        <div>
+            <p>To build the server-side component of a “movies” web application. The web
+                application will provide users with access to information about different
+                movies, directors, and genres. Users will be able to sign up, update their
+                personal information, and create a list of their favorite movies.</p>
+        </div>
+        <table>
+            <tr>
+                <th>Business Logic</th>
+                <th>URL</th>
+                <th>HTTP Method</th>
+                <th>Request body data format</th>
+                <th>Response body data format</th>
+            </tr>
+            <tr>
+
+                    <td>Return a list of ALL movies to the user</td>
+                    <td>/movies</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>A JSON object containing data from every movie</td>
+                    </tr>
+                    <tr>
+                    <td>Return data about a single movie by title to the user</td>
+                    <td>/movies/:title</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>A JSON object containing all data about a single movie including its description, genre, director, image URL and whether it's featured or not
+                        {
+                            'Title': 'Star Wars',
+                            'Description': 'Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire\'s world-destroying battle station, while also attempting to rescue Princess Leia from the mysterious Darth Vader.',
+                            'Genre': {
+                                'Name': 'Sci-Fi',
+                                'Description': 'A fictionalized story wherein the setting and plot are centered around technology, time travel, outer space, or scientific principles, with or without the presence of aliens.'
+                            },
+                    
+                            'Director': {
+                                'Name': 'George Lucas',
+                                'Bio': 'American film director, producer, screenwriter, and entrepreneur. Lucas is best known for creating the Star Wars and Indiana Jones franchises and founding Lucasfilm, LucasArts, and Industrial Light & Magic.',
+                                'Birth': 1944
+                            },
+                            'ImageUrl': 'https://en.wikipedia.org/wiki/Star_Wars#/media/File:Star_wars2.svg',
+                            'Featured': false,
+                            Year: 1977
+                        }
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>Return data about a genre by name/title</td>
+                    <td>/movies/genre/genreName</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>A JSON object containing all data about a single genre including its name (e.g., "Drama") and description
+                        {
+                        ''Name': 'Action',
+                        'Description': 'Action sequences, such as fighting, stunts, car chases or explosions, take precedence over elements like characterization or complex plotting.'
+                        }
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>Return data about a director by name</td>
+                    <td>/movies/directors/:directorName</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>A JSON object containing all data about a single director including name, bio and birth year
+                        {
+                            'Director': {
+                                'Name': 'Gavin O\'Connor',
+                                'Bio': 'American film director, screenwriter, producer, playwright, and actor. He is best known for directing the films Miracle, Warrior, The Accountant, and The Way Back.',
+                                'Birth': 1963
+                        }
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>Allow new users to register</td>
+                    <td>/users</td>
+                    <td>POST</td>
+                    <td>JSON object holding data about the new user including their name and favoriteMovies 
+                        {
+                        "name": "Corey Smith",
+                        "favoriteMovies": [
+                            "Star Wars",
+                            "Talladega Nights"
+                        ]
+                        }
+                    </td>
+                    <td>A JSON object containing data about the new user including their name, favoriteMovies and id
+                        {
+                        "name": "Corey Smith",
+                        "favoriteMovies": [
+                            "Star Wars",
+                            "Talladega Nights"
+                        ],
+                        "id": "3410583a-f968-480e-b7d1-47c483f6cd48"
+                        }
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>Allow users to update their user info</td>
+                    <td>/users/:id</td>
+                    <td>PUT</td>
+                    <td>A JSON object containing data to update the given user's name
+                        {
+                        "name": "Corey Smith"
+                        }
+                    </td>
+                    <td>A JSON object containing data about the user including their id and the new username
+                        {
+                        "id": 1,
+                        "name": "Corey Smith"
+                        }
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>Allow users to add a movie to their list of favorites</td>
+                    <td>/users/:id/:movieTitle</td>
+                    <td>POST</td>
+                    <td>None</td>
+                    <td>A text message indicating whether or not the movie was successfully added to the user's array</td>
+                    </tr>
+                    <tr>
+                    <td>Allow users to remove a movie from their list of favorites</td>
+                    <td>/movies/:id/:movieTitle</td>
+                    <td>DELETE</td>
+                    <td>None</td>
+                    <td>A text message indicating whether or not the movie was successfully removed from the user's array</td>
+                    </tr>
+                    <tr>
+                    <td>Allow existing users to deregister</td>
+                    <td>/users/:id</td>
+                    <td>DELETE</td>
+                    <td>None</td>
+                    <td>A text message indicating whether or not the user's data has been successfully deleted</td>
+            </tr>
+        </table>
     </body>
 </html>

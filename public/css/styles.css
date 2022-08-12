@@ -1,0 +1,11 @@
+* {
+    text-align: center;
+}
+tr, th, td {
+    border: 5px inset blue;
+    padding: 15px;
+}
+body {
+    background-color: cornsilk;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
