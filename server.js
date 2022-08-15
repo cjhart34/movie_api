@@ -10,16 +10,16 @@ app.use(bodyParser.json());
 
 let users = [
 {
-    id: 1,
-    Name: 'Corey Smith',
-    favoriteMovies: ['Star Wars',
-     'Talladega Nights']
+    "Name": "Corey Smith",
+    "id": "1",
+    "favoriteMovies": ["Star Wars",
+     "Talladega Nights"]
 },
 {
-    id: 2,
-    Name: 'Jimmy Nuggets',
-    favoriteMovies: ['Warrior', 
-        'The Punisher']
+    "Name": "Jimmy Nuggets",
+    "id": "2",
+    "favoriteMovies": ["Warrior", 
+        "The Punisher"]
 }
 ];
 
@@ -210,7 +210,7 @@ let movies = [
 app.post('/users', (req, res) => {
     const newUser = req.body;
 
-    if (newUser.name) {
+    if (newUser.Name) { 
         newUser.id = uuid.v4();
         users.push(newUser);
         res.status(201).json(newUser)
