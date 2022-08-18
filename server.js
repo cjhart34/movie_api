@@ -37,7 +37,7 @@ let movies = [
             'Bio': 'American film director, producer, screenwriter, and entrepreneur. Lucas is best known for creating the Star Wars and Indiana Jones franchises and founding Lucasfilm, LucasArts, and Industrial Light & Magic.',
             'Birth': 1944
         },
-        'ImageUrl': 'https://en.wikipedia.org/wiki/Star_Wars#/media/File:Star_wars2.svg',
+        'ImageUrl': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Star_wars2.svg/1920px-Star_wars2.svg.png',
         'Featured': false,
         Year: 1977
     },
@@ -55,7 +55,7 @@ let movies = [
             'Bio': 'American film director, screenwriter, producer, playwright, and actor. He is best known for directing the films Miracle, Warrior, The Accountant, and The Way Back.',
             'Birth': 1963
         },
-        'ImageUrl': 'https://en.wikipedia.org/wiki/Warrior_(2011_film)#/media/File:Warrior_Poster.jpg',
+        'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/e/e3/Warrior_Poster.jpg',
         'Featured': false,
         Year: 2011
     },
@@ -73,7 +73,7 @@ let movies = [
             'Bio': 'American actor, comedian, and filmmaker. His films have grossed more than $2.6 billion in Canada and the United States, with an average of $79 million per film.[2] Throughout his career, he has received various awards and honors, including an Emmy Award, multiple MTV Movie Awards, a Britannia Award and a Teen Choice Award.',
             'Birth': 1965
         },
-        'ImageUrl': 'https://en.wikipedia.org/wiki/Tropic_Thunder#/media/File:Tropic_thunder_ver3.jpg',
+        'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/d/d6/Tropic_thunder_ver3.jpg',
         'Featured': false,
         Year: 2008
     },
@@ -91,7 +91,7 @@ let movies = [
             'Bio': 'American animator, film director, screenwriter, and film producer. He often collaborates with fellow director Ron Clements and is best known for writing and directing the Disney films The Great Mouse Detective (1986), The Little Mermaid (1989), Aladdin (1992), Hercules (1997), Treasure Planet (2002), The Princess and the Frog (2009), and Moana (2016).',
             'Birth': 1953
         },
-        'ImageUrl': 'https://en.wikipedia.org/wiki/Hercules_(1997_film)#/media/File:Hercules_(1997_film)_poster.jpg',
+        'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/6/65/Hercules_%281997_film%29_poster.jpg',
         'Featured': false,
         Year: 1997
     },
@@ -109,7 +109,7 @@ let movies = [
             'Bio': 'American film director, film producer, and screenwriter, best known for action and science fiction films.',
             'Birth': 1966
         },
-        'ImageUrl': 'https://en.wikipedia.org/wiki/300_(film)#/media/File:300poster.jpg',
+        'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/5/5c/300poster.jpg',
         'Featured': false,
         Year: 2007
     },
@@ -127,7 +127,7 @@ let movies = [
             'Bio': 'American film director, producer, screenwriter and actor. He is the recipient of many accolades, including an Academy Award, three Primetime Emmy Awards, a Grammy Award, four British Academy Film Awards, three Golden Globe Awards, and two Directors Guild of America Awards.',
             'Birth': 1942
         },
-        'ImageUrl': 'https://en.wikipedia.org/wiki/The_Wolf_of_Wall_Street_(2013_film)#/media/File:The_Wolf_of_Wall_Street_(2013).png',
+        'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/d/d8/The_Wolf_of_Wall_Street_%282013%29.png',
         'Featured': false,
         Year: 2013
     },
@@ -145,7 +145,7 @@ let movies = [
             'Bio': 'American film director, producer, screenwriter, and comedian. He rose to fame in the 2000s for his collaborations with comedian Will Ferrell and co-wrote his comedy films Anchorman, Talladega Nights, and The Other Guys.',
             'Birth': 1968
         },
-        'ImageUrl': 'https://en.wikipedia.org/wiki/Talladega_Nights:_The_Ballad_of_Ricky_Bobby#/media/File:Talladega_nights.jpg',
+        'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/e/e7/Talladega_nights.jpg',
         'Featured': false,
         Year: 2006
     },
@@ -164,7 +164,7 @@ let movies = [
             'Bio': 'German film director, screenwriter, and producer. He is widely known for his science fiction and disaster films and has been called a "master of disaster" within the industry.',
             'Birth': 1955
         },
-        'ImageUrl': 'https://en.wikipedia.org/wiki/The_Patriot_(2000_film)#/media/File:Patriot_promo_poster.jpg',
+        'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/6/68/Patriot_promo_poster.jpg',
         'Featured': false,
         Year: 2000
     },
@@ -182,7 +182,7 @@ let movies = [
             'Bio': 'Australian film and television director. He has been an assistant director on many films, including Dark City (1998), the Matrix trilogy and Star Wars: Episode II Attack of the Clones (2002), and made his directorial debut with the 2005 film V for Vendetta to critical acclaim.',
             'Birth': 1967
         },
-        'ImageUrl': 'https://en.wikipedia.org/wiki/V_for_Vendetta_(film)#/media/File:Vforvendettamov.jpg',
+        'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/9/9f/Vforvendettamov.jpg',
         'Featured': false,
         Year: 2006
     },
@@ -200,7 +200,7 @@ let movies = [
             'Bio': 'American screenwriter and film director, working primarily in the action-adventure genre, best known for writing films such as Jumanji, Die Hard with a Vengeance, and Armageddon.',
             'Birth': 1959
         },
-        'ImageUrl': 'https://en.wikipedia.org/wiki/The_Punisher_(2004_film)#/media/File:Punisher_ver2.jpg',
+        'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/d/d9/Punisher_ver2.jpg',
         'Featured': false,
         Year: 2004
     },
