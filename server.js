@@ -39,7 +39,7 @@ let movies = [
         },
         'ImageUrl': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Star_wars2.svg/1920px-Star_wars2.svg.png',
         'Featured': false,
-        Year: 1977
+        'Year': 1977
     },
 
     {
@@ -57,7 +57,7 @@ let movies = [
         },
         'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/e/e3/Warrior_Poster.jpg',
         'Featured': false,
-        Year: 2011
+        'Year': 2011
     },
 
     {
@@ -75,7 +75,7 @@ let movies = [
         },
         'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/d/d6/Tropic_thunder_ver3.jpg',
         'Featured': false,
-        Year: 2008
+        'Year': 2008
     },
 
     {
@@ -93,7 +93,7 @@ let movies = [
         },
         'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/6/65/Hercules_%281997_film%29_poster.jpg',
         'Featured': false,
-        Year: 1997
+        'Year': 1997
     },
 
     {
@@ -111,7 +111,7 @@ let movies = [
         },
         'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/5/5c/300poster.jpg',
         'Featured': false,
-        Year: 2007
+        'Year': 2007
     },
 
     {
@@ -129,7 +129,7 @@ let movies = [
         },
         'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/d/d8/The_Wolf_of_Wall_Street_%282013%29.png',
         'Featured': false,
-        Year: 2013
+        'Year': 2013
     },
 
     {
@@ -147,7 +147,8 @@ let movies = [
         },
         'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/e/e7/Talladega_nights.jpg',
         'Featured': false,
-        Year: 2006
+        'Year': 2006
+        
     },
 
 
@@ -166,7 +167,7 @@ let movies = [
         },
         'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/6/68/Patriot_promo_poster.jpg',
         'Featured': false,
-        Year: 2000
+        'Year': 2000
     },
 
     {
@@ -184,7 +185,7 @@ let movies = [
         },
         'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/9/9f/Vforvendettamov.jpg',
         'Featured': false,
-        Year: 2006
+        'Year': 2006
     },
 
     {
@@ -202,8 +203,25 @@ let movies = [
         },
         'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/d/d9/Punisher_ver2.jpg',
         'Featured': false,
-        Year: 2004
+        'Year': 2004
     },
+    {
+        'Title': 'The Departed',
+        'Description': 'An undercover cop and a mole in the police attempt to identify each other while infiltrating an Irish gang in South Boston.',
+        'Genre': {
+            'Name': 'Drama',
+            'Description': 'A genre of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone.'
+        },
+
+        'Director': {
+            'Name': 'Martin Scorsese',
+            'Bio': 'American film director, producer, screenwriter and actor. He is the recipient of many accolades, including an Academy Award, three Primetime Emmy Awards, a Grammy Award, four British Academy Film Awards, three Golden Globe Awards, and two Directors Guild of America Awards.',
+            'Birth': 1944
+        },
+        'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/5/50/Departed234.jpg',
+        'Featured': false,
+        'Year': 2006
+    }
     
 ];
 
@@ -232,6 +250,7 @@ app.put('/users/:id', (req, res) => {
         res.status(400).send('No such user')
     }
 })
+
 
 app.post('/users/:id/:movieTitle', (req, res) => {
     const { id, movieTitle } = req.params;
@@ -290,6 +309,17 @@ app.get('/movies/:title', (req, res) => {
         res.status(400).send('No such movie')
     }
 })
+
+app.get('/users/:id/favoriteMovies', (req, res) => {
+    const { id } = req.params;
+    const favoriteMovies = users.find( user => user.id === parseInt(id) ).favoriteMovies;
+  
+    if (favoriteMovies) {
+      res.status(200).json(favoriteMovies);
+    } else {
+      res.status(400).send('This user has no favorite movies');
+    }
+  });
 
 app.get('/movies/genre/:genreName', (req, res) => {
     const { genreName } = req.params;
