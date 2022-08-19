@@ -22,20 +22,31 @@
                 <th>Request body data format</th>
                 <th>Response body data format</th>
             </tr>
+            
             <tr>
+                    <td>Send users to homepage</td>
+                    <td>/</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>The Homepage of the App</td>
+            </tr>
 
+            <tr>
                     <td>Return a list of ALL movies to the user</td>
                     <td>/movies</td>
                     <td>GET</td>
                     <td>None</td>
                     <td>A JSON object containing data from every movie</td>
-                    </tr>
-                    <tr>
+            </tr>
+
+            <tr>
+
                     <td>Return data about a single movie by title to the user</td>
                     <td>/movies/:title</td>
                     <td>GET</td>
                     <td>None</td>
                     <td>A JSON object containing all data about a single movie including its description, genre, director, image URL and whether it's featured or not
+                        <code>
                         {
                             'Title': 'Star Wars',
                             'Description': 'Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire\'s world-destroying battle station, while also attempting to rescue Princess Leia from the mysterious Darth Vader.',
@@ -53,91 +64,164 @@
                             'Featured': false,
                             Year: 1977
                         }
+                        </code>
                     </td>
-                    </tr>
-                    <tr>
-                    <td>Return data about a genre by name/title</td>
-                    <td>/movies/genre/genreName</td>
+            </tr>
+
+            <tr>
+                <td>Return list of all users and their data</td>
+                <td>/users</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>A JSON object containing data from every user</td>
+            </tr>
+
+            <tr>
+                    <td>Return data about a user</td>
+                    <td>/users/:Username</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>A JSON object containing all data about the user 
+                        <code>
+                            {
+                                "Name": "Corey Smith",
+                                "Username": "csmith",
+                                "Password": "examplepassword",
+                                "Email": "csmith@gmail.com",
+                                "Birthday": "1917-02-11",
+                                "FavoriteMovies": [
+                                    "62fed450e5f56f387af5a1d7",
+                                    "62fed450e5f56f387af5a1d6"
+                                ]
+                                }
+                        </code>
+                    </td>
+            </tr>
+
+            <tr>
+                    <td>Return data about a genre by title</td>
+                    <td>/genre/:Genre</td>
                     <td>GET</td>
                     <td>None</td>
                     <td>A JSON object containing all data about a single genre including its name (e.g., "Drama") and description
+                        <code>
                         {
                         ''Name': 'Action',
                         'Description': 'Action sequences, such as fighting, stunts, car chases or explosions, take precedence over elements like characterization or complex plotting.'
                         }
+                        </code>
                     </td>
-                    </tr>
-                    <tr>
+            </tr>
+
+            <tr>
                     <td>Return data about a director by name</td>
-                    <td>/movies/directors/:directorName</td>
+                    <td>/directors/:Director</td>
                     <td>GET</td>
                     <td>None</td>
                     <td>A JSON object containing all data about a single director including name, bio and birth year
+                        <code>
                         {
                             'Director': {
                                 'Name': 'Gavin O\'Connor',
                                 'Bio': 'American film director, screenwriter, producer, playwright, and actor. He is best known for directing the films Miracle, Warrior, The Accountant, and The Way Back.',
                                 'Birth': 1963
                         }
+                        </code>
                     </td>
-                    </tr>
-                    <tr>
+            </tr>
+
+            <tr>
                     <td>Allow new users to register</td>
                     <td>/users</td>
                     <td>POST</td>
-                    <td>JSON object holding data about the new user including their name and favoriteMovies 
+                    <td>JSON object holding data about the new user including their name, username, password, email, birthday, and FavoriteMovies
+                        <code> 
                         {
-                        "name": "Corey Smith",
-                        "favoriteMovies": [
-                            "Star Wars",
-                            "Talladega Nights"
+                        "Name": "Corey Smith",
+                        "Username": "csmith",
+                        "Password": "examplepassword",
+                        "Email": "csmith@gmail.com",
+                        "Birthday": "1917-02-11",
+                        "FavoriteMovies": [
+                            "62fed450e5f56f387af5a1d7",
+                            "62fed450e5f56f387af5a1d6"
                         ]
                         }
+                        </code>
                     </td>
-                    <td>A JSON object containing data about the new user including their name, favoriteMovies and id
+                    <td>A JSON object containing data about the new user including their name, username, password, email, birthday, FavoriteMovies, and id
+                        <code>
                         {
                         "name": "Corey Smith",
-                        "favoriteMovies": [
-                            "Star Wars",
-                            "Talladega Nights"
+                        "Username": "csmith",
+                        "Password": "examplepassword",
+                        "Email": "csmith@gmail.com",
+                        "Birthday": "1917-02-11",
+                        "FavoriteMovies": [
+                            "62fed450e5f56f387af5a1d7",
+                            "62fed450e5f56f387af5a1d6"
                         ],
                         "id": "3410583a-f968-480e-b7d1-47c483f6cd48"
                         }
+                        </code>
                     </td>
-                    </tr>
-                    <tr>
+            </tr>
+
+            <tr>
                     <td>Allow users to update their user info</td>
-                    <td>/users/:id</td>
+                    <td>/users/:Username</td>
                     <td>PUT</td>
-                    <td>A JSON object containing data to update the given user's name
-                        {
-                        "name": "Corey Smith"
-                        }
+                    <td>A JSON object containing data to update the given user's info
+                        <code>
+                            {
+                                "Name": "Corey Smith",
+                                "Username": "csmith",
+                                "Password": "examplepassword",
+                                "Email": "csmith@gmail.com",
+                                "Birthday": "1917-02-11",
+                                "FavoriteMovies": [
+                                    "62fed450e5f56f387af5a1d7",
+                                    "62fed450e5f56f387af5a1d6"
+                                ]
+                                }
+                        </code>
                     </td>
                     <td>A JSON object containing data about the user including their id and the new username
-                        {
-                        "id": 1,
-                        "name": "Corey Smith"
-                        }
+                        <code>
+                            {
+                                "Name": "Corey Smith",
+                                "Username": "csmith",
+                                "Password": "examplepassword",
+                                "Email": "csmith@gmail.com",
+                                "Birthday": "1917-02-11",
+                                "FavoriteMovies": [
+                                    "62fed450e5f56f387af5a1d7",
+                                    "62fed450e5f56f387af5a1d6"
+                                ]
+                                }
+                        </code>
                     </td>
-                    </tr>
-                    <tr>
+            </tr>
+
+            <tr>
                     <td>Allow users to add a movie to their list of favorites</td>
-                    <td>/users/:id/:movieTitle</td>
+                    <td>/users/:Username/movies/:MovieID</td>
                     <td>POST</td>
                     <td>None</td>
                     <td>A text message indicating whether or not the movie was successfully added to the user's array</td>
-                    </tr>
-                    <tr>
+            </tr>
+
+            <tr>
                     <td>Allow users to remove a movie from their list of favorites</td>
-                    <td>/movies/:id/:movieTitle</td>
+                    <td>/users/:Username/favorites/:MovieID</td>
                     <td>DELETE</td>
                     <td>None</td>
                     <td>A text message indicating whether or not the movie was successfully removed from the user's array</td>
-                    </tr>
-                    <tr>
+            </tr>
+                    
+            <tr>
                     <td>Allow existing users to deregister</td>
-                    <td>/users/:id</td>
+                    <td>/users/:Username</td>
                     <td>DELETE</td>
                     <td>None</td>
                     <td>A text message indicating whether or not the user's data has been successfully deleted</td>
