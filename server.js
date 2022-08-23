@@ -2,23 +2,26 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const uuid = require('uuid')
 const morgan = require('morgan');
-const app = express();
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 
 const Movies = Models.Movie;
 const Users = Models.User;
+const Directors = Models.Director;
+const Genres = Models.Genre;
 
 mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
-app.use(express.static('public'));
-app.use(morgan('common'));
+const app = express();
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('public'));
+app.use(morgan('common'));
 
-let auth = require('./auth')(app);
+let auth = require('./auth.js')(app);
 const passport = require('passport');
-require('./passport');
+require('./passport.js');
 
 let users = [
         {
@@ -287,7 +290,7 @@ app.post('/users', (req, res) => {
     Users.findOne({ Username: req.body.Username })
       .then((user) => {
         if (user) {
-          return res.status(400).send(req.body.Username + 'already exists');
+          return res.status(400).send(req.body.Username + ' already exists');
         } else {
           Users.create({
               Username: req.body.Username,
@@ -304,7 +307,7 @@ app.post('/users', (req, res) => {
       })
       .catch((error) => {
         console.error(error);
-        res.status(500).send('Error:' + error);
+        res.status(500).send('Error: ' + error);
       });
   });
 
@@ -364,7 +367,7 @@ app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { se
       (err, updatedUser) => {
         if (err) {
           console.error(err);
-          res.status(500).send(`Error: ${err}`);
+          res.status(500).send('Error: ' + err);
         } else {
           res.json(updatedUser);
         }
@@ -373,7 +376,9 @@ app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { se
   });
 
 // Delete a user by username
-app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.delete('/users/:Username', 
+passport.authenticate('jwt', { session: false }), 
+(req, res) => {
     Users.findOneAndRemove({ Username: req.params.Username })
       .then((user) => {
         if (!user) {
