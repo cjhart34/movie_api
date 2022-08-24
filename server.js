@@ -425,7 +425,7 @@ passport.authenticate('jwt', { session: false }),
   });
 
 app.get('/', (req, res) => {
-    res.send('Welcome to my myFlix API!');
+    res.sendFile(path.join(__dirname, '/index.html'));
 });
 
 // Get a list of all movies
