@@ -3,7 +3,7 @@ const express = require('express');
 const uuid = require('uuid')
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const Models = require('./models ');
+const Models = require('./models');
 
 const Movies = Models.Movie;
 const Users = Models.User;
