@@ -1,8 +1,8 @@
-const bodyParser = require('body-parser');
 const express = require('express');
-const uuid = require('uuid')
 const morgan = require('morgan');
+const bodyParser = require('body-parser');
 const { check, validationResult } = require('express-validator');
+const uuid = require('uuid');
 
 const mongoose = require('mongoose');
 const Models = require('./models');
@@ -11,21 +11,16 @@ const Movies = Models.Movie;
 const Users = Models.User;
 const Directors = Models.Director;
 const Genres = Models.Genre;
-const URI = process.env.CONNECTION_URI;
-
-const mongoDB = 'mongodb://127.0.0.1/myFlixDB';
-mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
-
-//Get the default connection
-const db = mongoose.connection;
-
-//Bind connection to error event (to get notification of connection errors)
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // mongoose.connect(process.env.CONNECTION_URI, 
 // { useNewUrlParser: true, useUnifiedTopology: true });
 
+mongoose.connect(process.env.CONNECTION_URI, 
+  { useNewUrlParser: true, useUnifiedTopology: true });
+
 // mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true, useUnifiedTopology: true});
+
+// mongoose.connect('mongodb+srv://testuser:TestUser@myflixdb.d5y2zjb.mongodb.net/test', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const app = express();
 
@@ -317,6 +312,11 @@ require('./passport');
   Email: String,
   Birthday: Date
 }*/
+
+app.get('/', (req, res) => {
+  res.sendFile('/index.html', { root: __dirname });
+});
+
 app.post('/users', 
     [
       check('Username', 'Username is required').isLength({min: 5}),
@@ -438,10 +438,6 @@ passport.authenticate('jwt', { session: false }),
       });
   });
 
-app.get('/', (req, res) => {
-    res.sendFile('/index.html', { root: __dirname });
-});
-
 // Get a list of all movies
 app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
     Movies.find()
@@ -523,7 +519,11 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something went wrong.')
 });
 
-const port = process.env.PORT || 8080;
+// const port = process.env.PORT || 8080;
+// app.listen(port, '0.0.0.0', () => {
+//  console.log('Listening on Port ' + port);
+// });
+const port = process.env.PORT || 8080
 app.listen(port, '0.0.0.0', () => {
- console.log('Listening on Port ' + port);
+  console.log('Your app is listening on port ' + port);
 });
