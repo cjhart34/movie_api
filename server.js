@@ -12,11 +12,11 @@ const Users = Models.User;
 const Directors = Models.Director;
 const Genres = Models.Genre;
 
-// mongoose.connect(process.env.CONNECTION_URI, 
-// { useNewUrlParser: true, useUnifiedTopology: true });
-
 mongoose.connect(process.env.CONNECTION_URI, 
-  { useNewUrlParser: true, useUnifiedTopology: true });
+{ useNewUrlParser: true, useUnifiedTopology: true });
+
+// mongoose.connect('mongodb+srv://cjhart:buddybuddy@myflixdb.pckuvbg.mongodb.net/?retryWrites=true&w=majority', 
+//   { useNewUrlParser: true, useUnifiedTopology: true });
 
 // mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -315,6 +315,10 @@ require('./passport');
 
 app.get('/', (req, res) => {
   res.sendFile('/index.html', { root: __dirname });
+});
+
+app.get('/public/documentation.html', (req, res) => {
+  res.sendFile('/public/documentation.html', { root: __dirname });
 });
 
 app.post('/users', 
