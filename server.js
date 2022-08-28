@@ -15,13 +15,6 @@ const Genres = Models.Genre;
 mongoose.connect(process.env.CONNECTION_URI, 
 { useNewUrlParser: true, useUnifiedTopology: true });
 
-// mongoose.connect('mongodb+srv://cjhart:buddybuddy@myflixdb.pckuvbg.mongodb.net/?retryWrites=true&w=majority', 
-//   { useNewUrlParser: true, useUnifiedTopology: true });
-
-// mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true, useUnifiedTopology: true});
-
-// mongoose.connect('mongodb+srv://testuser:TestUser@myflixdb.d5y2zjb.mongodb.net/test', { useNewUrlParser: true, useUnifiedTopology: true });
-
 const app = express();
 
 app.use(bodyParser.json());
@@ -32,19 +25,7 @@ app.use(morgan('common'));
 const cors = require('cors');
 app.use(cors());
 
-// Code for allowing only certain domains
-// let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
-// app.use(cors({
-//   origin: (origin, callback) => {
-//     if(!origin) return callback(null, true);
-//     if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
-//       let message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
-//       return callback(new Error(message ), false);
-//     }
-//     return callback(null, true);
-//   }
-// }));
-
+//authentication
 let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
@@ -383,7 +364,20 @@ app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { sess
   (required)
   Birthday: Date
 }*/
-app.put('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
+
+app.put('/users/:Username', [
+  check('Username', 'Username is required').isLength({min: 5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email is not valid').isEmail(),
+  check('Birthday', 'Birthday must be in the date format').isDate()
+], passport.authenticate('jwt', { session: false }), (req, res) => {
+    let errors = validationResult(req);
+
+    if(!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
     Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
       {
         Username: req.body.Username,
@@ -519,10 +513,6 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something went wrong.')
 });
 
-// const port = process.env.PORT || 8080;
-// app.listen(port, '0.0.0.0', () => {
-//  console.log('Listening on Port ' + port);
-// });
 const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0', () => {
   console.log('Your app is listening on port ' + port);

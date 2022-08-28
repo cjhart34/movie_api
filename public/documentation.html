@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/styles.css">
-        <title>MyFlix</title>
+        <title>MyFlix App</title>
     </head>
     <body>
         <h1>Documentation</h1>
@@ -27,7 +27,7 @@
             <tr>
                     <td>Send users to homepage</td>
                     <td>/</td>
-                    <td>GET</td>
+                    <td><code>GET</code></td>
                     <td>None</td>
                     <td>The Homepage of the App</td>
             </tr>
@@ -35,7 +35,7 @@
             <tr>
                     <td>Return a list of ALL movies to the user</td>
                     <td>/movies</td>
-                    <td>GET</td>
+                    <td><code>GET</code></td>
                     <td>None</td>
                     <td>A JSON object containing data from every movie</td>
             </tr>
@@ -44,7 +44,7 @@
 
                     <td>Return data about a single movie by title to the user</td>
                     <td>/movies/:title</td>
-                    <td>GET</td>
+                    <td><code>GET</code></td>
                     <td>None</td>
                     <td>A JSON object containing all data about a single movie including its description, genre, director, image URL and whether it's featured or not
                         <code>
@@ -72,7 +72,7 @@
             <tr>
                 <td>Return list of all users and their data</td>
                 <td>/users</td>
-                <td>GET</td>
+                <td><code>GET</code></td>
                 <td>None</td>
                 <td>A JSON object containing data from every user</td>
             </tr>
@@ -80,7 +80,7 @@
             <tr>
                     <td>Return data about a user</td>
                     <td>/users/:Username</td>
-                    <td>GET</td>
+                    <td><code>GET</code></td>
                     <td>None</td>
                     <td>A JSON object containing all data about the user 
                         <code>
@@ -102,7 +102,7 @@
             <tr>
                     <td>Return data about a genre by title</td>
                     <td>/genre/:Genre</td>
-                    <td>GET</td>
+                    <td><code>GET</code></td>
                     <td>None</td>
                     <td>A JSON object containing all data about a single genre including its name (e.g., "Drama") and description
                         <code>
@@ -117,7 +117,7 @@
             <tr>
                     <td>Return data about a director by name</td>
                     <td>/directors/:Director</td>
-                    <td>GET</td>
+                    <td><code>GET</code></td>
                     <td>None</td>
                     <td>A JSON object containing all data about a single director including name, bio and birth year
                         <code>
@@ -134,7 +134,7 @@
             <tr>
                     <td>Allow new users to register</td>
                     <td>/users</td>
-                    <td>POST</td>
+                    <td><code>POST</code></td>
                     <td>JSON object holding data about the new user including their name, username, password, email, birthday, and FavoriteMovies
                         <code> 
                         {
@@ -171,7 +171,7 @@
             <tr>
                     <td>Allow users to update their user info</td>
                     <td>/users/:Username</td>
-                    <td>PUT</td>
+                    <td><code>PUT</code></td>
                     <td>A JSON object containing data to update the given user's info
                         <code>
                             {
@@ -207,7 +207,7 @@
             <tr>
                     <td>Allow users to add a movie to their list of favorites</td>
                     <td>/users/:Username/movies/:MovieID</td>
-                    <td>POST</td>
+                    <td><code>POST</code></td>
                     <td>None</td>
                     <td>A text message indicating whether or not the movie was successfully added to the user's array</td>
             </tr>
@@ -215,7 +215,7 @@
             <tr>
                     <td>Allow users to remove a movie from their list of favorites</td>
                     <td>/users/:Username/favorites/:MovieID</td>
-                    <td>DELETE</td>
+                    <td><code>DELETE</code></td>
                     <td>None</td>
                     <td>A text message indicating whether or not the movie was successfully removed from the user's array</td>
             </tr>
@@ -223,7 +223,7 @@
             <tr>
                     <td>Allow existing users to deregister</td>
                     <td>/users/:Username</td>
-                    <td>DELETE</td>
+                    <td><code>DELETE</code></td>
                     <td>None</td>
                     <td>A text message indicating whether or not the user's data has been successfully deleted</td>
             </tr>
