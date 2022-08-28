@@ -317,10 +317,6 @@ app.get('/', (req, res) => {
   res.sendFile('/index.html', { root: __dirname });
 });
 
-app.get('/public/documentation.html', (req, res) => {
-  res.sendFile('/public/documentation.html', { root: __dirname });
-});
-
 app.post('/users', 
     [
       check('Username', 'Username is required').isLength({min: 5}),
