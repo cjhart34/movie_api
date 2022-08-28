@@ -14,8 +14,8 @@ An API that shows movies and their data to the user. You can sign up, update you
 
 ---
 ## Repository Link:
-[MyFlix_API](https://github.com/cjhart34/movie_api)
+[movie_api](https://github.com/cjhart34/movie_api)
 
 ---
 # Live Link:
-[MyFlix_API]()
+[cjhart34](https://cjhart34.herokuapp.com/)
