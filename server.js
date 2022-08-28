@@ -378,7 +378,7 @@ app.put('/users/:Username', [
       return res.status(422).json({ errors: errors.array() });
     }
 
-    let hashedPassword = users.hashPassword(req.body.Password);
+    let hashedPassword = Users.hashPassword(req.body.Password);
 
     Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
       {
