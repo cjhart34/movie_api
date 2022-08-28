@@ -2,6 +2,8 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const uuid = require('uuid')
 const morgan = require('morgan');
+const { check, validationResult } = require('express-validator');
+
 const mongoose = require('mongoose');
 const Models = require('./models');
 
@@ -9,12 +11,23 @@ const Movies = Models.Movie;
 const Users = Models.User;
 const Directors = Models.Director;
 const Genres = Models.Genre;
+const URI = process.env.CONNECTION_URI;
 
-mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+const mongoDB = 'mongodb://127.0.0.1/myFlixDB';
+mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
+
+//Get the default connection
+const db = mongoose.connection;
+
+//Bind connection to error event (to get notification of connection errors)
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+// mongoose.connect(process.env.CONNECTION_URI, 
+// { useNewUrlParser: true, useUnifiedTopology: true });
+
+// mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true, useUnifiedTopology: true});
 
 const app = express();
-
-const { check, validationResult } = require('express-validator');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -41,259 +54,259 @@ let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
 
-let users = [
-        {
-            "_id": "62fed89be5f56f387af5a1d8",
-            "Name": "John Derp",
-            "Username": "jderp14",
-            "Password": "11oderp",
-            "Email": "jd1114@gmail.com",
-            "Birthday": "1995-06-19T00:00:00.000Z",
-            "FavoriteMovies": [
-                "62fed450e5f56f387af5a1d7",
-                "62fed450e5f56f387af5a1d6"
-            ]
-        },
-        {
-            "_id": "62fedb42e5f56f387af5a1da",
-            "Name": "Ronald McDonald",
-            "Username": "mcdons",
-            "Password": "betterthanbk",
-            "Email": "mcdonalds@gmail.com",
-            "Birthday": "1963-05-01T00:00:00.000Z",
-            "FavoriteMovies": [
-                "62fed403e5f56f387af5a1d5",
-                "62fed3dee5f56f387af5a1d4"
-            ]
-        },
-        {
-            "_id": "62fedbb5e5f56f387af5a1db",
-            "Name": "Jimmy Neutron",
-            "Username": "jneut",
-            "Password": "smrtrthnu",
-            "Email": "jimmyn@gmail.com",
-            "Birthday": "1991-03-14T00:00:00.000Z",
-            "FavoriteMovies": [
-                "62fed3dee5f56f387af5a1d4",
-                "62fed3a1e5f56f387af5a1d3"
-            ]
-        },
-        {
-            "_id": "62fedc57e5f56f387af5a1dc",
-            "Name": "Mario Mario",
-            "Username": "mario",
-            "Password": "gottagetpeach",
-            "Email": "gotmushrooms@gmail.com",
-            "Birthday": "1965-05-27T00:00:00.000Z",
-            "FavoriteMovies": [
-                "62fed3a1e5f56f387af5a1d3",
-                "62fed31ae5f56f387af5a1d2",
-                "62fed0aae5f56f387af5a1cd"
-            ]
-        }
-];
+// let users = [
+//         {
+//             "_id": "62fed89be5f56f387af5a1d8",
+//             "Name": "John Derp",
+//             "Username": "jderp14",
+//             "Password": "11oderp",
+//             "Email": "jd1114@gmail.com",
+//             "Birthday": "1995-06-19T00:00:00.000Z",
+//             "FavoriteMovies": [
+//                 "62fed450e5f56f387af5a1d7",
+//                 "62fed450e5f56f387af5a1d6"
+//             ]
+//         },
+//         {
+//             "_id": "62fedb42e5f56f387af5a1da",
+//             "Name": "Ronald McDonald",
+//             "Username": "mcdons",
+//             "Password": "betterthanbk",
+//             "Email": "mcdonalds@gmail.com",
+//             "Birthday": "1963-05-01T00:00:00.000Z",
+//             "FavoriteMovies": [
+//                 "62fed403e5f56f387af5a1d5",
+//                 "62fed3dee5f56f387af5a1d4"
+//             ]
+//         },
+//         {
+//             "_id": "62fedbb5e5f56f387af5a1db",
+//             "Name": "Jimmy Neutron",
+//             "Username": "jneut",
+//             "Password": "smrtrthnu",
+//             "Email": "jimmyn@gmail.com",
+//             "Birthday": "1991-03-14T00:00:00.000Z",
+//             "FavoriteMovies": [
+//                 "62fed3dee5f56f387af5a1d4",
+//                 "62fed3a1e5f56f387af5a1d3"
+//             ]
+//         },
+//         {
+//             "_id": "62fedc57e5f56f387af5a1dc",
+//             "Name": "Mario Mario",
+//             "Username": "mario",
+//             "Password": "gottagetpeach",
+//             "Email": "gotmushrooms@gmail.com",
+//             "Birthday": "1965-05-27T00:00:00.000Z",
+//             "FavoriteMovies": [
+//                 "62fed3a1e5f56f387af5a1d3",
+//                 "62fed31ae5f56f387af5a1d2",
+//                 "62fed0aae5f56f387af5a1cd"
+//             ]
+//         }
+// ];
 
-let movies = [
-    {
-        'Title': 'Star Wars',
-        'Description': 'Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire\'s world-destroying battle station, while also attempting to rescue Princess Leia from the mysterious Darth Vader.',
-        'Genre': {
-            'Name': 'Sci-Fi',
-            'Description': 'A fictionalized story wherein the setting and plot are centered around technology, time travel, outer space, or scientific principles, with or without the presence of aliens.'
-        },
+// let movies = [
+//     {
+//         'Title': 'Star Wars',
+//         'Description': 'Luke Skywalker joins forces with a Jedi Knight, a cocky pilot, a Wookiee and two droids to save the galaxy from the Empire\'s world-destroying battle station, while also attempting to rescue Princess Leia from the mysterious Darth Vader.',
+//         'Genre': {
+//             'Name': 'Sci-Fi',
+//             'Description': 'A fictionalized story wherein the setting and plot are centered around technology, time travel, outer space, or scientific principles, with or without the presence of aliens.'
+//         },
 
-        'Director': {
-            'Name': 'George Lucas',
-            'Bio': 'American film director, producer, screenwriter, and entrepreneur. Lucas is best known for creating the Star Wars and Indiana Jones franchises and founding Lucasfilm, LucasArts, and Industrial Light & Magic.',
-            'Birth': 1944
-        },
-        'ImageUrl': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Star_wars2.svg/1920px-Star_wars2.svg.png',
-        'Featured': false,
-        'Year': 1977
-    },
+//         'Director': {
+//             'Name': 'George Lucas',
+//             'Bio': 'American film director, producer, screenwriter, and entrepreneur. Lucas is best known for creating the Star Wars and Indiana Jones franchises and founding Lucasfilm, LucasArts, and Industrial Light & Magic.',
+//             'Birth': 1944
+//         },
+//         'ImageUrl': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Star_wars2.svg/1920px-Star_wars2.svg.png',
+//         'Featured': false,
+//         'Year': 1977
+//     },
 
-    {
-        'Title': 'Warrior',
-        'Description': 'The youngest son of an alcoholic former boxer returns home, where he\'s trained by his father for competition in a mixed martial arts tournament - a path that puts the fighter on a collision course with his estranged, older brother.',
-        'Genre': {
-            'Name': 'Action',
-            'Description': 'Action sequences, such as fighting, stunts, car chases or explosions, take precedence over elements like characterization or complex plotting.'
-        },
+//     {
+//         'Title': 'Warrior',
+//         'Description': 'The youngest son of an alcoholic former boxer returns home, where he\'s trained by his father for competition in a mixed martial arts tournament - a path that puts the fighter on a collision course with his estranged, older brother.',
+//         'Genre': {
+//             'Name': 'Action',
+//             'Description': 'Action sequences, such as fighting, stunts, car chases or explosions, take precedence over elements like characterization or complex plotting.'
+//         },
 
-        'Director': {
-            'Name': 'Gavin O\'Connor',
-            'Bio': 'American film director, screenwriter, producer, playwright, and actor. He is best known for directing the films Miracle, Warrior, The Accountant, and The Way Back.',
-            'Birth': 1963
-        },
-        'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/e/e3/Warrior_Poster.jpg',
-        'Featured': false,
-        'Year': 2011
-    },
+//         'Director': {
+//             'Name': 'Gavin O\'Connor',
+//             'Bio': 'American film director, screenwriter, producer, playwright, and actor. He is best known for directing the films Miracle, Warrior, The Accountant, and The Way Back.',
+//             'Birth': 1963
+//         },
+//         'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/e/e3/Warrior_Poster.jpg',
+//         'Featured': false,
+//         'Year': 2011
+//     },
 
-    {
-        'Title': 'Tropic Thunder',
-        'Description': 'Through a series of freak occurrences, a group of actors shooting a big-budget war movie are forced to become the soldiers they are portraying.',
-        'Genre': {
-            'Name': 'Comedy',
-            'Description': 'A genre of fiction that consists of discourses or works intended to be humorous or amusing by inducing laughter.'
-        },
+//     {
+//         'Title': 'Tropic Thunder',
+//         'Description': 'Through a series of freak occurrences, a group of actors shooting a big-budget war movie are forced to become the soldiers they are portraying.',
+//         'Genre': {
+//             'Name': 'Comedy',
+//             'Description': 'A genre of fiction that consists of discourses or works intended to be humorous or amusing by inducing laughter.'
+//         },
 
-        'Director': {
-            'Name': 'Ben Stiller',
-            'Bio': 'American actor, comedian, and filmmaker. His films have grossed more than $2.6 billion in Canada and the United States, with an average of $79 million per film.[2] Throughout his career, he has received various awards and honors, including an Emmy Award, multiple MTV Movie Awards, a Britannia Award and a Teen Choice Award.',
-            'Birth': 1965
-        },
-        'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/d/d6/Tropic_thunder_ver3.jpg',
-        'Featured': false,
-        'Year': 2008
-    },
+//         'Director': {
+//             'Name': 'Ben Stiller',
+//             'Bio': 'American actor, comedian, and filmmaker. His films have grossed more than $2.6 billion in Canada and the United States, with an average of $79 million per film.[2] Throughout his career, he has received various awards and honors, including an Emmy Award, multiple MTV Movie Awards, a Britannia Award and a Teen Choice Award.',
+//             'Birth': 1965
+//         },
+//         'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/d/d6/Tropic_thunder_ver3.jpg',
+//         'Featured': false,
+//         'Year': 2008
+//     },
 
-    {
-        'Title': 'Hercules',
-        'Description': 'The son of Zeus and Hera is stripped of his immortality as an infant and must become a true hero in order to reclaim it.',
-        'Genre': {
-            'Name': 'Comedy',
-            'Description': 'A genre of fiction that consists of discourses or works intended to be humorous or amusing by inducing laughter.'
-        },
+//     {
+//         'Title': 'Hercules',
+//         'Description': 'The son of Zeus and Hera is stripped of his immortality as an infant and must become a true hero in order to reclaim it.',
+//         'Genre': {
+//             'Name': 'Comedy',
+//             'Description': 'A genre of fiction that consists of discourses or works intended to be humorous or amusing by inducing laughter.'
+//         },
 
-        'Director': {
-            'Name': 'John Musker',
-            'Bio': 'American animator, film director, screenwriter, and film producer. He often collaborates with fellow director Ron Clements and is best known for writing and directing the Disney films The Great Mouse Detective (1986), The Little Mermaid (1989), Aladdin (1992), Hercules (1997), Treasure Planet (2002), The Princess and the Frog (2009), and Moana (2016).',
-            'Birth': 1953
-        },
-        'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/6/65/Hercules_%281997_film%29_poster.jpg',
-        'Featured': false,
-        'Year': 1997
-    },
+//         'Director': {
+//             'Name': 'John Musker',
+//             'Bio': 'American animator, film director, screenwriter, and film producer. He often collaborates with fellow director Ron Clements and is best known for writing and directing the Disney films The Great Mouse Detective (1986), The Little Mermaid (1989), Aladdin (1992), Hercules (1997), Treasure Planet (2002), The Princess and the Frog (2009), and Moana (2016).',
+//             'Birth': 1953
+//         },
+//         'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/6/65/Hercules_%281997_film%29_poster.jpg',
+//         'Featured': false,
+//         'Year': 1997
+//     },
 
-    {
-        'Title': '300',
-        'Description': 'King Leonidas of Sparta and a force of 300 men fight the Persians at Thermopylae in 480 B.C.',
-        'Genre': {
-            'Name': 'Action',
-            'Description': 'Action sequences, such as fighting, stunts, car chases or explosions, take precedence over elements like characterization or complex plotting.'
-        },
+//     {
+//         'Title': '300',
+//         'Description': 'King Leonidas of Sparta and a force of 300 men fight the Persians at Thermopylae in 480 B.C.',
+//         'Genre': {
+//             'Name': 'Action',
+//             'Description': 'Action sequences, such as fighting, stunts, car chases or explosions, take precedence over elements like characterization or complex plotting.'
+//         },
 
-        'Director': {
-            'Name': 'Zack Snyder',
-            'Bio': 'American film director, film producer, and screenwriter, best known for action and science fiction films.',
-            'Birth': 1966
-        },
-        'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/5/5c/300poster.jpg',
-        'Featured': false,
-        'Year': 2007
-    },
+//         'Director': {
+//             'Name': 'Zack Snyder',
+//             'Bio': 'American film director, film producer, and screenwriter, best known for action and science fiction films.',
+//             'Birth': 1966
+//         },
+//         'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/5/5c/300poster.jpg',
+//         'Featured': false,
+//         'Year': 2007
+//     },
 
-    {
-        'Title': 'The Wolf of Wall Street',
-        'Description': 'Based on the true story of Jordan Belfort, from his rise to a wealthy stock-broker living the high life to his fall involving crime, corruption and the federal government.',
-        'Genre': {
-            'Name': 'Drama',
-            'Description': 'A genre of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone.'
-        },
+//     {
+//         'Title': 'The Wolf of Wall Street',
+//         'Description': 'Based on the true story of Jordan Belfort, from his rise to a wealthy stock-broker living the high life to his fall involving crime, corruption and the federal government.',
+//         'Genre': {
+//             'Name': 'Drama',
+//             'Description': 'A genre of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone.'
+//         },
 
-        'Director': {
-            'Name': 'Martin Scorsese',
-            'Bio': 'American film director, producer, screenwriter and actor. He is the recipient of many accolades, including an Academy Award, three Primetime Emmy Awards, a Grammy Award, four British Academy Film Awards, three Golden Globe Awards, and two Directors Guild of America Awards.',
-            'Birth': 1942
-        },
-        'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/d/d8/The_Wolf_of_Wall_Street_%282013%29.png',
-        'Featured': false,
-        'Year': 2013
-    },
+//         'Director': {
+//             'Name': 'Martin Scorsese',
+//             'Bio': 'American film director, producer, screenwriter and actor. He is the recipient of many accolades, including an Academy Award, three Primetime Emmy Awards, a Grammy Award, four British Academy Film Awards, three Golden Globe Awards, and two Directors Guild of America Awards.',
+//             'Birth': 1942
+//         },
+//         'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/d/d8/The_Wolf_of_Wall_Street_%282013%29.png',
+//         'Featured': false,
+//         'Year': 2013
+//     },
 
-    {
-        'Title': 'Talladega Nights',
-        'Description': 'Number one NASCAR driver Ricky Bobby stays atop the heap thanks to a pact with his best friend and teammate, Cal Naughton, Jr. But when a French Formula One driver, makes his way up the ladder, Ricky Bobby\'s talent and devotion are put to the test.',
-        'Genre': {
-            'Name': 'Comedy',
-            'Description': 'A genre of fiction that consists of discourses or works intended to be humorous or amusing by inducing laughter.'
-        },
+//     {
+//         'Title': 'Talladega Nights',
+//         'Description': 'Number one NASCAR driver Ricky Bobby stays atop the heap thanks to a pact with his best friend and teammate, Cal Naughton, Jr. But when a French Formula One driver, makes his way up the ladder, Ricky Bobby\'s talent and devotion are put to the test.',
+//         'Genre': {
+//             'Name': 'Comedy',
+//             'Description': 'A genre of fiction that consists of discourses or works intended to be humorous or amusing by inducing laughter.'
+//         },
 
-        'Director': {
-            'Name': 'Adam McKay',
-            'Bio': 'American film director, producer, screenwriter, and comedian. He rose to fame in the 2000s for his collaborations with comedian Will Ferrell and co-wrote his comedy films Anchorman, Talladega Nights, and The Other Guys.',
-            'Birth': 1968
-        },
-        'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/e/e7/Talladega_nights.jpg',
-        'Featured': false,
-        'Year': 2006
+//         'Director': {
+//             'Name': 'Adam McKay',
+//             'Bio': 'American film director, producer, screenwriter, and comedian. He rose to fame in the 2000s for his collaborations with comedian Will Ferrell and co-wrote his comedy films Anchorman, Talladega Nights, and The Other Guys.',
+//             'Birth': 1968
+//         },
+//         'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/e/e7/Talladega_nights.jpg',
+//         'Featured': false,
+//         'Year': 2006
         
-    },
+//     },
 
 
-    {
-        'Title': 'The Patriot',
-        'Description': 'Peaceful farmer Benjamin Martin is driven to lead the Colonial Militia during the American Revolution when a sadistic British officer murders his son.',
-        'Genre': {
-            'Name': 'Action',
-            'Description': 'Action sequences, such as fighting, stunts, car chases or explosions, take precedence over elements like characterization or complex plotting.'
-        },
+//     {
+//         'Title': 'The Patriot',
+//         'Description': 'Peaceful farmer Benjamin Martin is driven to lead the Colonial Militia during the American Revolution when a sadistic British officer murders his son.',
+//         'Genre': {
+//             'Name': 'Action',
+//             'Description': 'Action sequences, such as fighting, stunts, car chases or explosions, take precedence over elements like characterization or complex plotting.'
+//         },
 
-        'Director': {
-            'Name': 'Roland Emmerich',
-            'Bio': 'German film director, screenwriter, and producer. He is widely known for his science fiction and disaster films and has been called a "master of disaster" within the industry.',
-            'Birth': 1955
-        },
-        'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/6/68/Patriot_promo_poster.jpg',
-        'Featured': false,
-        'Year': 2000
-    },
+//         'Director': {
+//             'Name': 'Roland Emmerich',
+//             'Bio': 'German film director, screenwriter, and producer. He is widely known for his science fiction and disaster films and has been called a "master of disaster" within the industry.',
+//             'Birth': 1955
+//         },
+//         'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/6/68/Patriot_promo_poster.jpg',
+//         'Featured': false,
+//         'Year': 2000
+//     },
 
-    {
-        'Title': 'V For Vendetta',
-        'Description': 'In a future British dystopian society, a shadowy freedom fighter, known only by the alias of "V", plots to overthrow the tyrannical government - with the help of a young woman.',
-        'Genre': {
-            'Name': 'Action',
-            'Description': 'Action sequences, such as fighting, stunts, car chases or explosions, take precedence over elements like characterization or complex plotting.'
-        },
+//     {
+//         'Title': 'V For Vendetta',
+//         'Description': 'In a future British dystopian society, a shadowy freedom fighter, known only by the alias of "V", plots to overthrow the tyrannical government - with the help of a young woman.',
+//         'Genre': {
+//             'Name': 'Action',
+//             'Description': 'Action sequences, such as fighting, stunts, car chases or explosions, take precedence over elements like characterization or complex plotting.'
+//         },
 
-        'Director': {
-            'Name': 'James McTeigue',
-            'Bio': 'Australian film and television director. He has been an assistant director on many films, including Dark City (1998), the Matrix trilogy and Star Wars: Episode II Attack of the Clones (2002), and made his directorial debut with the 2005 film V for Vendetta to critical acclaim.',
-            'Birth': 1967
-        },
-        'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/9/9f/Vforvendettamov.jpg',
-        'Featured': false,
-        'Year': 2006
-    },
+//         'Director': {
+//             'Name': 'James McTeigue',
+//             'Bio': 'Australian film and television director. He has been an assistant director on many films, including Dark City (1998), the Matrix trilogy and Star Wars: Episode II Attack of the Clones (2002), and made his directorial debut with the 2005 film V for Vendetta to critical acclaim.',
+//             'Birth': 1967
+//         },
+//         'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/9/9f/Vforvendettamov.jpg',
+//         'Featured': false,
+//         'Year': 2006
+//     },
 
-    {
-        'Title': 'The Punisher',
-        'Description': 'An undercover FBI agent becomes a vigilante and sets out to unleash his wrath upon the corrupt businessman who slaughtered his entire family at a reunion.',
-        'Genre': {
-            'Name': 'Action',
-            'Description': 'Action sequences, such as fighting, stunts, car chases or explosions, take precedence over elements like characterization or complex plotting.'
-        },
+//     {
+//         'Title': 'The Punisher',
+//         'Description': 'An undercover FBI agent becomes a vigilante and sets out to unleash his wrath upon the corrupt businessman who slaughtered his entire family at a reunion.',
+//         'Genre': {
+//             'Name': 'Action',
+//             'Description': 'Action sequences, such as fighting, stunts, car chases or explosions, take precedence over elements like characterization or complex plotting.'
+//         },
 
-        'Director': {
-            'Name': 'Jonathan Hensleigh',
-            'Bio': 'American screenwriter and film director, working primarily in the action-adventure genre, best known for writing films such as Jumanji, Die Hard with a Vengeance, and Armageddon.',
-            'Birth': 1959
-        },
-        'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/d/d9/Punisher_ver2.jpg',
-        'Featured': false,
-        'Year': 2004
-    },
-    {
-        'Title': 'The Departed',
-        'Description': 'An undercover cop and a mole in the police attempt to identify each other while infiltrating an Irish gang in South Boston.',
-        'Genre': {
-            'Name': 'Drama',
-            'Description': 'A genre of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone.'
-        },
+//         'Director': {
+//             'Name': 'Jonathan Hensleigh',
+//             'Bio': 'American screenwriter and film director, working primarily in the action-adventure genre, best known for writing films such as Jumanji, Die Hard with a Vengeance, and Armageddon.',
+//             'Birth': 1959
+//         },
+//         'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/d/d9/Punisher_ver2.jpg',
+//         'Featured': false,
+//         'Year': 2004
+//     },
+//     {
+//         'Title': 'The Departed',
+//         'Description': 'An undercover cop and a mole in the police attempt to identify each other while infiltrating an Irish gang in South Boston.',
+//         'Genre': {
+//             'Name': 'Drama',
+//             'Description': 'A genre of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone.'
+//         },
 
-        'Director': {
-            'Name': 'Martin Scorsese',
-            'Bio': 'American film director, producer, screenwriter and actor. He is the recipient of many accolades, including an Academy Award, three Primetime Emmy Awards, a Grammy Award, four British Academy Film Awards, three Golden Globe Awards, and two Directors Guild of America Awards.',
-            'Birth': 1944
-        },
-        'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/5/50/Departed234.jpg',
-        'Featured': false,
-        'Year': 2006
-    }
+//         'Director': {
+//             'Name': 'Martin Scorsese',
+//             'Bio': 'American film director, producer, screenwriter and actor. He is the recipient of many accolades, including an Academy Award, three Primetime Emmy Awards, a Grammy Award, four British Academy Film Awards, three Golden Globe Awards, and two Directors Guild of America Awards.',
+//             'Birth': 1944
+//         },
+//         'ImageUrl': 'https://upload.wikimedia.org/wikipedia/en/5/50/Departed234.jpg',
+//         'Featured': false,
+//         'Year': 2006
+//     }
     
-];
+// ];
 
 //Add a user
 /* We’ll expect JSON in this format
@@ -309,7 +322,8 @@ app.post('/users',
       check('Username', 'Username is required').isLength({min: 5}),
       check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
       check('Password', 'Password is required').not().isEmpty(),
-      check('Email', 'Email is not valid').isEmail()
+      check('Email', 'Email is not valid').isEmail(),
+      check('Birthday', 'Birthday must be in the date format').isDate()
     ], (req, res) => {
       //check the validation object for errors
       let errors = validationResult(req);
