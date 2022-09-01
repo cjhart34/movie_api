@@ -440,12 +440,12 @@ app.get('/movies',
   // passport.authenticate('jwt', { session: false }),
   function (req, res) {
     Movies.find()
-      .then(function (moviesList) {
-        res.status(201).json(moviesList);
+      .then((movies) => {
+        res.status(201).json(movies);
       })
-      .catch(function (error) {
-        console.error(error);
-        res.status(500).send('Error: ' + error);
+      .catch(function (err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
       });
   });
 
