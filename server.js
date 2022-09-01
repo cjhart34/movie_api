@@ -448,7 +448,7 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) 
 });
 
 //Find movie by title
-app.get('/movies/:title', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/movies/:title', (req, res) => {
   const { title } = req.params;
   const movie = movies.find(movie => movie.Title === title);
 
@@ -520,3 +520,7 @@ const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0', () => {
   console.log('Your app is listening on port ' + port);
 });
+
+
+// mongoimport --uri mongodb+srv://cjhart:buddybuddy@myflixdb1.cdmgkjg.mongodb.net/MyFlixDB1 --collection movies --type json --file ../movies.json
+// mongodb+srv://cjhart:buddybuddy@myflixdb1.cdmgkjg.mongodb.net/?retryWrites=true&w=majority
