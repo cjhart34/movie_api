@@ -460,7 +460,7 @@ app.get('/movies/:title', passport.authenticate('jwt', { session: false }), (req
 });
 
 // Get all users
-app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/users', (req, res) => {
   Users.find()
     .then((users) => {
       res.status(201).json(users);
@@ -523,4 +523,4 @@ app.listen(port, '0.0.0.0', () => {
 
 
 // mongoimport --uri mongodb+srv://cjhart:buddybuddy@myflixdb1.cdmgkjg.mongodb.net/MyFlixDB1 --collection movies --type json --file ../movies.json
-// mongodb+srv://cjhart:buddybuddy@myflixdb1.cdmgkjg.mongodb.net/?retryWrites=true&w=majority
+// mongodb+srv://cjhart:buddybuddy@myflixdb1.cdmgkjg.mongodb.net/MyFlixDB1?retryWrites=true&w=majority
