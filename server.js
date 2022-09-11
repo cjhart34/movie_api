@@ -28,6 +28,7 @@ app.use(cors());
 //authentication
 let auth = require('./auth')(app);
 const passport = require('passport');
+const { authenticate } = require('passport/lib');
 require('./passport');
 
 // let users = [
@@ -300,7 +301,7 @@ app.get('/', (req, res) => {
 
 app.post('/users',
   [
-    check('Username', 'Username is required').isLength({ min: 5 }),
+    check('Username', 'Username is required').isLength({ min: 3 }),
     check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
     check('Password', 'Password is required').not().isEmpty(),
     check('Email', 'Email is not valid').isEmail(),
@@ -366,7 +367,7 @@ app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { sess
 }*/
 
 app.put('/users/:Username', [
-  check('Username', 'Username is required').isLength({ min: 5 }),
+  check('Username', 'Username is required').isLength({ min: 3 }),
   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
   check('Password', 'Password is required').not().isEmpty(),
   check('Email', 'Email is not valid').isEmail(),
@@ -448,15 +449,15 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) 
 });
 
 //Find movie by title
-app.get('/movies/:title', passport.authenticate('jwt', { session: false }), (req, res) => {
-  const { title } = req.params;
-  const movie = movies.find(movie => movie.Title === title);
-
-  if (movie) {
-    res.status(200).json(movie)
-  } else {
-    res.status(400).send('No such movie')
-  }
+app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Movies.findOne({ Title: req.params.Title })
+    .then((movie) => {
+      res.json(movie);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
 });
 
 // Get all users
@@ -491,7 +492,7 @@ app.get('/genres/:Genre', passport.authenticate('jwt', { session: false }), (req
     })
     .catch((err) => {
       console.error(err);
-      res.status(500).send(`Error: ${err}`);
+      res.status(500).send('Error: ' + err);
     });
 });
 
@@ -503,7 +504,7 @@ app.get('/directors/:Director', passport.authenticate('jwt', { session: false })
     })
     .catch((err) => {
       console.error(err);
-      res.status(500).send(`Error: ${err}`);
+      res.status(500).send('Error: ' + err);
     });
 });
 
