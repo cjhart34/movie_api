@@ -93,7 +93,7 @@ app.post('/users',
     check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
     check('Password', 'Password is required').not().isEmpty(),
     check('Email', 'Email is not valid').isEmail(),
-    check('Birthday', 'Birthday must be in the date format').isDate()
+    // check('Birthday', 'Birthday must be in the date format').isDate()
   ], (req, res) => {
     //check the validation object for errors
     let errors = validationResult(req);
