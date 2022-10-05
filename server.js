@@ -265,8 +265,8 @@ app.get('/movies/genres/:Title', passport.authenticate('jwt', { session: false }
 // Return data about a genre by name
 app.get('/genres/:Name', passport.authenticate('jwt', { session: false }), (req, res) => {
   Genres.findOne({ 'Genre.name': req.params.Name })
-    .then((movie) => {
-      res.json(movie.Genre);
+    .then((genre) => {
+      res.json(genre.Description);
     })
     .catch((err) => {
       console.error(err);
