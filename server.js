@@ -111,7 +111,7 @@ app.post('/users',
             Username: req.body.Username,
             Password: hashedPassword,
             Email: req.body.Email,
-            Birthday: req.body.Birthday
+            // Birthday: req.body.Birthday
           })
             .then((user) => {
               res.status(201).json(user)
@@ -161,7 +161,7 @@ app.put('/users/:Username', [
   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
   check('Password', 'Password is required').not().isEmpty(),
   check('Email', 'Email is not valid').isEmail(),
-  check('Birthday', 'Birthday must be in the date format').isDate()
+  // check('Birthday', 'Birthday must be in the date format').isDate()
 ], passport.authenticate('jwt', { session: false }), (req, res) => {
   let errors = validationResult(req);
 
@@ -177,7 +177,7 @@ app.put('/users/:Username', [
       Username: req.body.Username,
       Password: hashedPassword,
       Email: req.body.Email,
-      Birthday: req.body.Birthday
+      // Birthday: req.body.Birthday
     }
   },
     { new: true }, // This line makes sure that the updated document is returned
