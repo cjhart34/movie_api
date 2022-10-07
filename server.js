@@ -31,58 +31,6 @@ const passport = require('passport');
 const { authenticate } = require('passport/lib');
 require('./passport');
 
-// let users = [
-//         {
-//             "_id": "62fed89be5f56f387af5a1d8",
-//             "Name": "John Derp",
-//             "Username": "jderp14",
-//             "Password": "11oderp",
-//             "Email": "jd1114@gmail.com",
-//             "Birthday": "1995-06-19T00:00:00.000Z",
-//             "FavoriteMovies": [
-//                 "62fed450e5f56f387af5a1d7",
-//                 "62fed450e5f56f387af5a1d6"
-//             ]
-//         },
-//         {
-//             "_id": "62fedb42e5f56f387af5a1da",
-//             "Name": "Ronald McDonald",
-//             "Username": "mcdons",
-//             "Password": "betterthanbk",
-//             "Email": "mcdonalds@gmail.com",
-//             "Birthday": "1963-05-01T00:00:00.000Z",
-//             "FavoriteMovies": [
-//                 "62fed403e5f56f387af5a1d5",
-//                 "62fed3dee5f56f387af5a1d4"
-//             ]
-//         },
-//         {
-//             "_id": "62fedbb5e5f56f387af5a1db",
-//             "Name": "Jimmy Neutron",
-//             "Username": "jneut",
-//             "Password": "smrtrthnu",
-//             "Email": "jimmyn@gmail.com",
-//             "Birthday": "1991-03-14T00:00:00.000Z",
-//             "FavoriteMovies": [
-//                 "62fed3dee5f56f387af5a1d4",
-//                 "62fed3a1e5f56f387af5a1d3"
-//             ]
-//         },
-//         {
-//             "_id": "62fedc57e5f56f387af5a1dc",
-//             "Name": "Mario Mario",
-//             "Username": "mario",
-//             "Password": "gottagetpeach",
-//             "Email": "gotmushrooms@gmail.com",
-//             "Birthday": "1965-05-27T00:00:00.000Z",
-//             "FavoriteMovies": [
-//                 "62fed3a1e5f56f387af5a1d3",
-//                 "62fed31ae5f56f387af5a1d2",
-//                 "62fed0aae5f56f387af5a1cd"
-//             ]
-//         }
-// ];
-
 app.get('/', (req, res) => {
   res.sendFile('/index.html', { root: __dirname });
 });
@@ -93,7 +41,7 @@ app.post('/users',
     check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
     check('Password', 'Password is required').not().isEmpty(),
     check('Email', 'Email is not valid').isEmail(),
-    // check('Birthday', 'Birthday must be in the date format').isDate()
+    check('Birthday', 'Birthday must be in the date format').isDate()
   ], (req, res) => {
     //check the validation object for errors
     let errors = validationResult(req);
@@ -111,7 +59,7 @@ app.post('/users',
             Username: req.body.Username,
             Password: hashedPassword,
             Email: req.body.Email,
-            // Birthday: req.body.Birthday
+            Birthday: req.body.Birthday
           })
             .then((user) => {
               res.status(201).json(user)
@@ -161,7 +109,7 @@ app.put('/users/:Username', [
   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
   check('Password', 'Password is required').not().isEmpty(),
   check('Email', 'Email is not valid').isEmail(),
-  // check('Birthday', 'Birthday must be in the date format').isDate()
+  check('Birthday', 'Birthday must be in the date format').isDate()
 ], passport.authenticate('jwt', { session: false }), (req, res) => {
   let errors = validationResult(req);
 
@@ -177,7 +125,7 @@ app.put('/users/:Username', [
       Username: req.body.Username,
       Password: hashedPassword,
       Email: req.body.Email,
-      // Birthday: req.body.Birthday
+      Birthday: req.body.Birthday
     }
   },
     { new: true }, // This line makes sure that the updated document is returned
