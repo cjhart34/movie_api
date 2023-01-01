@@ -1,4 +1,7 @@
 # MyFlix REST API
+
+<img src=./img/movieapp2.png>
+
 ---
 ## About
 An API that shows movies and their data to the user. You can sign up, update your personal information, and create a list of your favorite movies.
@@ -17,5 +20,5 @@ An API that shows movies and their data to the user. You can sign up, update you
 [movie_api](https://github.com/cjhart34/movie_api)
 
 ---
-# Live Link:
+## Live Link:
 [cjhart34](https://cjhart34.herokuapp.com/)

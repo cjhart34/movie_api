@@ -93,17 +93,6 @@ app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { sess
 });
 
 // Update a user's info, by username
-/* We’ll expect JSON in this format
-{
-  Username: String,
-  (required)
-  Password: String,
-  (required)
-  Email: String,
-  (required)
-  Birthday: Date
-}*/
-
 app.put('/users/:Username', [
   check('Username', 'Username is required').isLength({ min: 3 }),
   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
@@ -270,7 +259,3 @@ const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0', () => {
   console.log('Your app is listening on port ' + port);
 });
-
-
-// mongoimport --uri mongodb+srv://cjhart:buddybuddy@myflixdb1.cdmgkjg.mongodb.net/MyFlixDB1 --collection movies --type json --file ../movies.json
-// mongodb+srv://cjhart:buddybuddy@myflixdb1.cdmgkjg.mongodb.net/MyFlixDB1?retryWrites=true&w=majority
